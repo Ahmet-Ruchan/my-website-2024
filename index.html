@@ -1,420 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Favicon belirlemek için -->
-    <link rel="icon" href="assets/deneme.png" type="image/x-icon">
-
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ahmet Ruçhan Avcı</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="mediaqueries.css" />
-  </head>
-  <body>
-    <nav id="desktop-nav">
-      <div class="logo" >Ahmet Ruçhan Avcı</div>
-      <div>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmet Ruçhan Avcı | Jr. Machine Learning Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .title-gradient {
+            background: linear-gradient(90deg, #f97316, #eab308);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .skill-card:hover {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold gradient-text">Ahmet Ruçhan Avcı</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="#experience" class="nav-link text-gray-700 hover:text-blue-600 transition">Experience</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">About</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Experience</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Projects</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Contact</a>
+            </div>
+        </div>
     </nav>
-    <nav id="hamburger-nav">
-      <div class="logo">Ahmet Ruçhan Avcı</div>
-      <div class="hamburger-menu">
-        <div class="hamburger-icon" onclick="toggleMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="menu-links">
-          <li><a href="#about" onclick="toggleMenu()">About</a></li>
-          <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-          <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-        </div>
-      </div>
-    </nav>
-    <section id="profile">
-      <div class="section__pic-container">
-        <img src="./assets/ben-4.png" alt="Ahmet Ruçhan Avcı profile picture" />
-      </div>
-      <div class="section__text">
-        <p class="section__text__p1">Hello, I'm</p>
-        <h1 class="title">Ahmet Ruçhan Avcı</h1>
-        <p class="section__text__p2">Jr. Machine Learning Engineer</p>
-        <div class="btn-container">
-          <button
-            class="btn btn-color-2"
-            onclick="window.open('./assets/Ahmet-Ruchan-AVCI-CV.pdf')"
-          >
-            Download CV
-          </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
-            Contact Info
-          </button>
-        </div>
-        <div id="socials-container">
-          <a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank">
-            <img src="./assets/linkedin.png" alt="My LinkedIn profile" class="icon" />
-          </a>
-          <a href="https://github.com/Ahmet-Ruchan" target="_blank">
-            <img src="./assets/github.png" alt="My Github profile" class="icon" />
-          </a>
-        </div>
-      </div>
-    </section>
-    <section id="about">
-      <p class="section__text__p1">Get To Know More</p>
-      <h1 class="title">About Me</h1>
-      <div class="section-container">
-        <div class="section__pic-container">
-          <img
-            src="./assets/about-pic.jpg"
-            alt="Profile picture"
-            class="about-pic"
-          />
-        </div>
-        <div class="about-details-container">
-          <div class="about-containers">
-            <div class="details-container">
-              <img
-                src="./assets/experience.png"
-                alt="Experience icon"
-                class="icon"
-              />
-              <h3>Experience</h3>
-              <br>
-              <p>1+ years <br />Machine Learning Engineering</p>
-            </div>
-            <div class="details-container">
-              <img
-                src="./assets/education.png"
-                alt="Education icon"
-                class="icon"
-              />
-              <h3>Education</h3>
-              <br>
-              Computer Engineering Bachelors Degree <br> <p class="education-css"> @ Beykent University</p> <!-- <br/> <br> Artificial Intelligence Engineering Masters Degree <p class="education-css"> @ Istanbul Technical University</p> -->
-            </div>
-          </div>
-          <div class="text-container">
-            <p>
-              First and foremost, I am a leader and entrepreneur. I am also a computer engineer. 
-              Still ongoing, throughout my entire learning life, I have always been and continue to be intertwined with technology and its derivatives. <br><br>  
-              I am open to learning new technologies. 
-              I thrive creating scalable engineering environments and processes with strong vision and solid fundamentals to enable businesses and fuel innovation. 
-              Having a strong academic and commercial research background, I help people navigate through the technology space. <br><br>
-              
-            </p>
-          </div>
-        </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#experience'"
-      />
-    </section>
-    <section id="experience">
-      <p class="section__text__p1">Explore My</p>
-      <h1 class="title">Experience</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container">
-            <h2 class="experience-sub-title">Artificial Intelligence, ML & DL</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Python</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>TensorFlow</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>PyTorch</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Keras</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Scikit-Learn</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>ONNX</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>OpenCV</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>YOLO</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-            </div>
-          </div>
-          <div class="details-container">
-            <h2 class="experience-sub-title">Computer Science</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Data Science</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>C</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
 
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>HTML & CSS</h3>
-                  <p>Intermediate</p>
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Hello, I'm <span class="gradient-text">Ahmet Ruçhan Avcı</span></h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6 title-gradient">Jr. Machine Learning Engineer</h2>
+                <p class="text-gray-600 mb-8">I thrive creating scalable engineering environments and processes with strong vision and solid fundamentals to enable businesses and fuel innovation.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a onclick="window.open('./assets/Ahmet-Ruchan-AVCI-CV.pdf')" href="#" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition shadow-md">Download CV
+                      
+                    </a>
+                    <a href="#contact" class="px-6 py-3 border border-blue-500 text-blue-500 rounded-lg font-medium hover:bg-blue-50 transition">Contact Info</a>
                 </div>
-              </article>
-              
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Git</h3>
-                  <p>Intermediate</p>
+                <div class="flex mt-8 space-x-4">
+                    <a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank" class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-blue-600 hover:bg-blue-200 transition">
+                        <i class="fab fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="https://github.com/Ahmet-Ruchan" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-gray-700 hover:bg-gray-200 transition">
+                        <i class="fab fa-github text-lg"></i>
+                    </a>
                 </div>
-              </article>
-
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>JavaScript</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Swift</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              
-              
-              
             </div>
-          </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    <img src="https://ahmetruchanavci.com/assets/ben-4.png" alt="Ahmet Ruçhan Avcı" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white shadow-xl">
+                    <div class="absolute -bottom-4 -right-4 bg-white p-2 rounded-full shadow-lg">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-code text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#projects'"
-      />
     </section>
-    <section id="projects">
-      <p class="section__text__p1">Browse My Recent</p>
-      <h1 class="title">Projects</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-1.png"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">DetectHub</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/Ahmet-Ruchan?tab=repositories'"
-              >
-                Github
-              </button>
-              
-              
 
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center section-title">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+                    <div class="relative">
+                        <img src="https://ahmetruchanavci.com/assets/about-pic.jpg" alt="About Ahmet" class="w-64 h-72 rounded-lg object-cover shadow-lg">
+                        <div class="absolute -bottom-4 -right-4 bg-white p-2 rounded-lg shadow-lg">
+                            <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-lg">
+                                <i class="fas fa-user-tie text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-briefcase text-blue-600"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Experience</h3>
+                            </div>
+                            <p class="text-gray-600">1+ years</p>
+                            <p class="text-gray-600">Machine Learning Engineering</p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-graduation-cap text-purple-600"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg">Education</h3>
+                            </div>
+                            <p class="text-gray-600">Computer Engineering Bachelors Degree</p>
+                            <p class="text-gray-600">@ Beykent University</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">First and foremost, I am a leader and entrepreneur. I am also a computer engineer. Still ongoing, throughout my entire learning life, I have always been and continue to be intertwined with technology and its derivatives.</p>
+                    <p class="text-gray-600">I am open to learning new technologies. I thrive creating scalable engineering environments and processes with strong vision and solid fundamentals to enable businesses and fuel innovation. Having a strong academic and commercial research background, I help people navigate through the technology space.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-center mb-12">
+                <i class="fas fa-arrow-down text-blue-500 mr-3 text-xl"></i>
+                <h2 class="text-3xl font-bold text-center section-title">Explore My Experience</h2>
             </div>
-          </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-5.jpeg"
-                alt="Project 2"
-                class="project-img"
-              />
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-center gradient-text">Artificial Intelligence, ML & DL</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Python</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">TensorFlow</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">PyTorch</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Keras</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Scikit-Learn</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">ONNX</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">OpenCV</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">YOLO</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                </div>
             </div>
-            <h2 class="experience-sub-title project-title">Unmanned Autonomous Rover</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/Ahmet-Ruchan?tab=repositories'"
-              >
-                Github
-              </button>
-              
+            
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-center gradient-text">Computer Science</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Data Science</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">C</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">HTML & CSS</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Git</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">JavaScript</h4>
+                        </div>
+                        <p class="text-gray-500">Basic</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Swift</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/cs.png"
-                alt="Project 3"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">Artificial Neural Networks</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/Ahmet-Ruchan?tab=repositories'"
-              >
-                Github
-              </button>
-              
-            </div>
-          </div>
         </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#contact'"
-      />
     </section>
-    <section id="contact">
-      <p class="section__text__p1">Get in Touch</p>
-      <h1 class="title">Contact Me</h1>
-      <div class="contact-info-upper-container">
-        <div class="contact-info-container">
-          <img
-            src="./assets/email.png"
-            alt="Email icon"
-            class="icon contact-icon email-icon"
-          />
-          <p><a href="mailto:aruchanavci01@gmail.com">aruchanavci01@gmail.com</a></p>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-white px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-center mb-12">
+                <i class="fas fa-arrow-down text-blue-500 mr-3 text-xl"></i>
+                <h2 class="text-3xl font-bold text-center section-title">Browse My Recent Projects</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <img src="https://ahmetruchanavci.com/assets/project-1.png" alt="DetectHub" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">DetectHub</h3>
+                        <p class="text-gray-600 mb-4">Advanced object detection platform</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-github mr-2"></i> Github
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <img src="https://ahmetruchanavci.com/assets/project-5.jpeg" alt="Unmanned Autonomous Rover" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Unmanned Autonomous Rover</h3>
+                        <p class="text-gray-600 mb-4">Self-navigating robotic vehicle</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-github mr-2"></i> Github
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-white rounded-xl overflow-hidden shadow-md transition duration-300">
+                    <img src="https://ahmetruchanavci.com/assets/cs.png" alt="Artificial Neural Networks" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Artificial Neural Networks</h3>
+                        <p class="text-gray-600 mb-4">Deep learning research project</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-github mr-2"></i> Github
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="contact-info-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="LinkedIn icon"
-            class="icon contact-icon"
-          />
-          <p><a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank">LinkedIn</a></p>
-        </div>
-      </div>
     </section>
-    <footer>
-      <nav>
-        <div class="nav-links-container">
-          <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-center mb-12">
+                <i class="fas fa-arrow-down text-blue-500 mr-3 text-xl"></i>
+                <h2 class="text-3xl font-bold text-center section-title">Get in Touch</h2>
+            </div>
+            
+            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8">
+                <div class="flex flex-col space-y-6">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-envelope text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-700">Email</h3>
+                            <a href="mailto:aruchanavci01@gmail.com" class="text-blue-600 hover:underline">aruchanavci01@gmail.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fab fa-linkedin-in text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-700">LinkedIn</h3>
+                            <a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank" class="text-blue-600 hover:underline">linkedin.com/in/ahmet-ruchana</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="mt-8">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 mb-2">Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-gray-700 mb-2">Message</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:opacity-90 transition shadow-md">Send Message</button>
+                </form>
+            </div>
         </div>
-      </nav>
-      <p>Copyright &#169; 2024 Ahmet Ruçhan Avcı. All Rights Reserved.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold gradient-text">Ahmet Ruçhan Avcı</span>
+                </div>
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="#about" class="hover:text-blue-300 transition">About</a>
+                    <a href="#experience" class="hover:text-blue-300 transition">Experience</a>
+                    <a href="#projects" class="hover:text-blue-300 transition">Projects</a>
+                    <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank" class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-blue-600 transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/Ahmet-Ruchan" target="_blank" class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600 transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>Copyright © 2024 Ahmet Ruçhan Avcı. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
-    <script src="script.js"></script>
-  </body>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
 </html>
