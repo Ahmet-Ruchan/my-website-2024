@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Ahmet Ruçhan Avcı — Blog</title>
+        <link>https://ahmetruchanavci.com/projects.html?type=blog</link>
+        <description>Blog posts on machine learning, AI systems, and engineering from Ahmet Ruçhan Avcı.</description>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 10 Dec 2024 00:00:00 GMT</lastBuildDate>
+        <atom:link href="https://ahmetruchanavci.com/feed.xml" rel="self" type="application/rss+xml"/>
+
+        <item>
+            <title>What I Learned About MCP at the AWS re:Invent Conference</title>
+            <link>https://ahmetruchanavci.com/project-detail.html?slug=what-i-learned-about-mcp-at-aws-conference</link>
+            <guid isPermaLink="true">https://ahmetruchanavci.com/project-detail.html?slug=what-i-learned-about-mcp-at-aws-conference</guid>
+            <pubDate>Tue, 10 Dec 2024 00:00:00 GMT</pubDate>
+            <description>Key takeaways from AWS re:Invent on the Model Context Protocol — tool calling patterns, security considerations, stateful session design, and real-world integration lessons.</description>
+            <content:encoded><![CDATA[
+<h2>What Is MCP and Why Does It Matter</h2>
+<p>The Model Context Protocol (MCP) defines a standard interface between LLM inference systems and the tools they call. Think of it as the HTTP of agent-to-tool communication — a wire format and session contract that lets any model, running anywhere, invoke tools defined by anyone, without the two sides needing to know each other's internals.</p>
+
+<h2>Tool Calling Patterns in Production</h2>
+<p>Three architectural patterns dominated the discussion at re:Invent:</p>
+
+<h3>Pattern 1: Stateless Tools</h3>
+<p>The simplest and most composable pattern. Each tool call is self-contained — no session state, no side effects beyond the returned value.</p>
+<pre><code class="language-python">@mcp.tool()
+def query_inventory(product_id: str) -> dict:
+    """Look up current stock levels for a product."""
+    with get_db_connection() as conn:
+        row = conn.execute(
+            "SELECT quantity, warehouse FROM inventory WHERE product_id = ?",
+            (product_id,)
+        ).fetchone()
+    return {"quantity": row["quantity"], "warehouse": row["warehouse"]}
+</code></pre>
+
+<h3>Pattern 2: Stateful Sessions</h3>
+<p>Some workflows require accumulating context across multiple tool calls.</p>
+<pre><code class="language-javascript">const session = await mcp.createSession({
+    persist: true,
+    ttl: 3600
+});
+await session.call('init_code_sandbox', { runtime: 'python3.11' });
+</code></pre>
+
+<h2>Security Considerations</h2>
+<p>Tool exposure introduces an attack surface that most teams underestimate. Key risks include prompt injection via tool results, overly broad tool permissions, tool schema as a vector, and unvalidated inputs.</p>
+<pre><code class="language-bash">mcp-inspector validate \
+  --schema ./tools/schema.json \
+  --strict \
+  --output report.json
+</code></pre>
+
+<h2>Key Takeaways</h2>
+<p>The MCP ecosystem is maturing quickly. The protocol handles the plumbing — the hard work is still in designing tools that are useful, safe, and correctly scoped.</p>
+            ]]></content:encoded>
+        </item>
+
+    </channel>
+</rss>

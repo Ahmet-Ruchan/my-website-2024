@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/deneme.png" type="image/x-icon">
+    <title>Loading… | Ahmet Ruçhan Avcı</title>
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="">
+    <!-- TODO: dynamic OG image (requires server-side or build step) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- marked.js — markdown to HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+    <!-- highlight.js — syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="content/data.js"></script>
+    <style>
+        /* ── Shared with index.html ─────────────────────────────────── */
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Type badges ────────────────────────────────────────────── */
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .type-badge-project  { background: #dbeafe; color: #1d4ed8; }
+        .type-badge-research { background: #ede9fe; color: #6d28d9; }
+        .type-badge-blog     { background: #fef3c7; color: #b45309; }
+        .type-badge-talk     { background: #d1fae5; color: #065f46; }
+
+        /* ── Status badge ───────────────────────────────────────────── */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .status-active      { background: #d1fae5; color: #065f46; }
+        .status-completed   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .status-archived    { background: #f9fafb; color: #6b7280; border: 1px solid #e5e7eb; }
+        .status-in-progress { background: #fef3c7; color: #b45309; }
+
+        /* ── Markdown prose ─────────────────────────────────────────── */
+        .prose-content h2 { font-size: 1.35rem; font-weight: 700; margin: 2rem 0 0.75rem; color: #111827; }
+        .prose-content h3 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: #1f2937; }
+        .prose-content p  { color: #374151; line-height: 1.8; margin-bottom: 1rem; }
+        .prose-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: #374151; }
+        .prose-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: #374151; }
+        .prose-content li { margin-bottom: 0.3rem; line-height: 1.7; }
+        .prose-content a  { color: #3b82f6; text-decoration: underline; }
+        .prose-content blockquote {
+            border-left: 4px solid #8b5cf6;
+            padding-left: 1rem;
+            color: #6b7280;
+            font-style: italic;
+            margin: 1.25rem 0;
+            background: #faf5ff;
+            padding: 0.75rem 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .prose-content hr  { border-color: #f1f5f9; margin: 2rem 0; }
+        .prose-content pre {
+            position: relative;
+            border-radius: 0.75rem;
+            margin: 1.25rem 0;
+            overflow: hidden;
+        }
+        .prose-content code:not(pre code) {
+            background: #f1f5f9;
+            color: #6d28d9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ── Copy button ────────────────────────────────────────────── */
+        .copy-btn {
+            position: absolute;
+            top: 0.55rem;
+            right: 0.55rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 0.35rem;
+            font-size: 0.7rem;
+            background: rgba(255,255,255,0.12);
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.18);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 1;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.22); }
+        .copy-btn.copied { background: #10b981; color: white; border-color: transparent; }
+
+        /* ── Research abstract ──────────────────────────────────────── */
+        .abstract-block {
+            border-left: 4px solid #8b5cf6;
+            background: #faf5ff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.625rem 0.625rem 0;
+            color: #374151;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* ── BibTeX block ───────────────────────────────────────────── */
+        .bibtex-block {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            font-size: 0.825rem;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            position: relative;
+            white-space: pre;
+        }
+
+        /* ── Reading time badge ─────────────────────────────────────── */
+        .reading-time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #fef3c7;
+            color: #b45309;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* ── Table of Contents ──────────────────────────────────────── */
+        .toc-sidebar {
+            position: sticky;
+            top: 5.5rem;
+            max-height: calc(100vh - 7rem);
+            overflow-y: auto;
+        }
+        .toc-link {
+            display: block;
+            padding: 0.3rem 0.75rem;
+            border-left: 2px solid transparent;
+            color: #9ca3af;
+            font-size: 0.825rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+        .toc-link:hover { color: #3b82f6; border-left-color: #93c5fd; }
+        .toc-link.active { color: #3b82f6; border-left-color: #3b82f6; font-weight: 600; }
+        .toc-link.toc-h3 { padding-left: 1.5rem; font-size: 0.775rem; }
+
+        /* ── Tech stack chip ────────────────────────────────────────── */
+        .tech-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* ── Gallery & Lightbox ─────────────────────────────────────── */
+        .gallery-thumb {
+            cursor: zoom-in;
+            border-radius: 0.625rem;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gallery-thumb:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox-overlay.open { opacity: 1; visibility: visible; }
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+        /* ── Series navigator ───────────────────────────────────────── */
+        .series-nav { background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 1.5px solid #bfdbfe; border-radius: 0.875rem; padding: 1.25rem; }
+        .series-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: 0.5rem; text-decoration: none; color: #374151; transition: background 0.2s; }
+        .series-item:hover { background: rgba(59,130,246,0.07); }
+        .series-item.current { background: white; font-weight: 600; color: #1d4ed8; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+
+        /* ── Video embed ────────────────────────────────────────────── */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.875rem; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* ── Related content mini-card ──────────────────────────────── */
+        .related-card {
+            display: flex;
+            gap: 0.875rem;
+            background: white;
+            border-radius: 0.75rem;
+            padding: 0.875rem;
+            border: 1px solid #f1f5f9;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+        .related-card:hover { border-color: #bfdbfe; box-shadow: 0 4px 12px rgba(59,130,246,0.08); }
+        .related-icon { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .related-icon-project  { background: #dbeafe; }
+        .related-icon-research { background: #ede9fe; }
+        .related-icon-blog     { background: #fef3c7; }
+        .related-icon-talk     { background: #d1fae5; }
+
+        /* ── External link button ───────────────────────────────────── */
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1.5px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .link-btn:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
+
+        /* ── Prev/Next navigation ───────────────────────────────────── */
+        .nav-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 1rem 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #f1f5f9;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+        .nav-card:hover { border-color: #bfdbfe; box-shadow: 0 4px 12px rgba(59,130,246,0.08); }
+
+        /* ── Tag pill (clickable) ───────────────────────────────────── */
+        .tag-pill {
+            display: inline-flex;
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            background: #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: all 0.15s ease;
+        }
+        .tag-pill:hover { background: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
+
+        /* ── Error state ────────────────────────────────────────────── */
+        .error-state { text-align: center; padding: 5rem 2rem; }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox-overlay" role="dialog" aria-label="Image lightbox">
+        <button class="lightbox-close" id="lightbox-close"><i class="fas fa-times"></i></button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold gradient-text" style="text-decoration:none">Ahmet Ruçhan Avcı</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#about" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
+                    <a href="index.html#experience" class="nav-link text-gray-700 hover:text-blue-600 transition">Experience</a>
+                    <a href="index.html#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Portfolio</a>
+                    <a href="projects.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
+                    <a href="index.html#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">About</a>
+                <a href="index.html#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Experience</a>
+                <a href="index.html#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Portfolio</a>
+                <a href="projects.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Projects</a>
+                <a href="index.html#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto" id="page-root">
+            <!-- Populated by JS -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="index.html" class="text-xl font-bold gradient-text" style="text-decoration:none">Ahmet Ruçhan Avcı</a>
+                </div>
+                <div class="flex space-x-6 mb-4 md:mb-0">
+                    <a href="index.html#about" class="hover:text-blue-300 transition">About</a>
+                    <a href="index.html#experience" class="hover:text-blue-300 transition">Experience</a>
+                    <a href="index.html#projects" class="hover:text-blue-300 transition">Portfolio</a>
+                    <a href="projects.html" class="hover:text-blue-300 transition">Projects</a>
+                    <a href="index.html#contact" class="hover:text-blue-300 transition">Contact</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://www.linkedin.com/in/ahmet-ruchana/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-blue-600 transition">
+                        <i class="fab fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="https://github.com/Ahmet-Ruchan" target="_blank" rel="noopener noreferrer" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600 transition">
+                        <i class="fab fa-github text-lg"></i>
+                    </a>
+                    <a href="https://www.kaggle.com/ahmetruhanavc" target="_blank" rel="noopener noreferrer" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-cyan-600 transition">
+                        <i class="fab fa-kaggle text-lg"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@ronin_ruch" target="_blank" rel="noopener noreferrer" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-red-600 transition">
+                        <i class="fab fa-youtube text-lg"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>Copyright &copy; 2026 Ahmet Ruçhan Avcı. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // TYPE_LABELS and TYPE_ICONS come from content/data.js
+
+        // ─── SEO ──────────────────────────────────────────────────────
+        function updateSEO(item) {
+            document.title = `${item.title} | Ahmet Ruçhan Avcı`;
+            const desc = document.querySelector('meta[name="description"]');
+            if (desc) desc.content = item.description;
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.content = `${item.title} | Ahmet Ruçhan Avcı`;
+            const ogDesc = document.querySelector('meta[property="og:description"]');
+            if (ogDesc) ogDesc.content = item.description;
+            const ogUrl = document.querySelector('meta[property="og:url"]');
+            if (ogUrl) ogUrl.content = `https://ahmetruchanavci.com/project-detail.html?slug=${item.slug}`;
+        }
+
+        // ─── Back link ────────────────────────────────────────────────
+        function buildBackHref() {
+            let href = 'projects.html';
+            try {
+                const ref = document.referrer;
+                if (ref && ref.includes('projects.html')) {
+                    const u = new URL(ref);
+                    const qs = [];
+                    if (u.searchParams.get('type')) qs.push('type=' + u.searchParams.get('type'));
+                    if (u.searchParams.get('tag'))  qs.push('tag='  + u.searchParams.get('tag'));
+                    if (qs.length) href = 'projects.html?' + qs.join('&');
+                }
+            } catch (e) { /* blocked — use default */ }
+            return href;
+        }
+
+        // ─── Error state ──────────────────────────────────────────────
+        function showErrorState(slug) {
+            document.title = 'Not Found | Ahmet Ruçhan Avcı';
+            document.getElementById('page-root').innerHTML = `
+                <div class="error-state">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                        <i class="fas fa-search text-gray-400 text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-3">Page Not Found</h1>
+                    <p class="text-gray-500 mb-6">
+                        ${slug ? `No content found for <code style="background:#f1f5f9;padding:.15rem .4rem;border-radius:.25rem;font-size:.875em">${slug}</code>.` : 'No slug was provided.'}
+                    </p>
+                    <a href="projects.html" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition shadow-md">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>`;
+        }
+
+        // ─── Clipboard helper ─────────────────────────────────────────
+        function copyToClipboard(text, btn, successLabel, defaultLabel) {
+            if (!navigator.clipboard) {
+                btn.innerHTML = '<i class="fas fa-times"></i> Not supported';
+                setTimeout(() => { btn.innerHTML = defaultLabel; }, 2000);
+                return;
+            }
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    btn.innerHTML = successLabel;
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.innerHTML = defaultLabel;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                })
+                .catch(() => {
+                    btn.innerHTML = '<i class="fas fa-times"></i> Copy failed';
+                    setTimeout(() => { btn.innerHTML = defaultLabel; }, 2000);
+                });
+        }
+
+        // ─── Markdown render ──────────────────────────────────────────
+        function renderMarkdown(body) {
+            if (!body) return '';
+            if (typeof marked === 'undefined') return `<pre>${body}</pre>`;
+            marked.setOptions({ gfm: true, breaks: true });
+            return marked.parse(body);
+        }
+
+        function highlightCode(container) {
+            container.querySelectorAll('pre code').forEach(block => {
+                if (typeof hljs !== 'undefined') hljs.highlightElement(block);
+                const pre = block.parentElement;
+                pre.style.position = 'relative';
+                const btn = document.createElement('button');
+                btn.className = 'copy-btn';
+                const defaultLabel = '<i class="fas fa-copy"></i> Copy';
+                btn.innerHTML = defaultLabel;
+                btn.addEventListener('click', () => {
+                    copyToClipboard(block.innerText, btn, '<i class="fas fa-check"></i> Copied!', defaultLabel);
+                });
+                pre.appendChild(btn);
+            });
+        }
+
+        // ─── BibTeX copy button ───────────────────────────────────────
+        function addBibTeXCopyBtn(container) {
+            const btn = container.querySelector('#bibtex-copy-btn');
+            if (!btn) return;
+            const pre = container.querySelector('#bibtex-pre');
+            const defaultLabel = '<i class="fas fa-copy"></i> Copy BibTeX';
+            btn.addEventListener('click', () => {
+                copyToClipboard(pre.textContent, btn, '<i class="fas fa-check"></i> Copied!', defaultLabel);
+            });
+        }
+
+        // ─── Table of Contents ────────────────────────────────────────
+        function buildToC(proseEl, tocEl) {
+            const headings = proseEl.querySelectorAll('h2, h3');
+            if (headings.length < 2) {
+                const sidebar = document.getElementById('toc-sidebar');
+                if (sidebar) sidebar.style.display = 'none';
+                return;
+            }
+
+            headings.forEach(h => {
+                if (!h.id) {
+                    h.id = h.textContent.toLowerCase().replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+                }
+            });
+
+            tocEl.innerHTML = Array.from(headings).map(h => `
+                <a href="#${h.id}" class="toc-link ${h.tagName === 'H3' ? 'toc-h3' : ''}">
+                    ${h.textContent}
+                </a>
+            `).join('');
+
+            // Intersection Observer for active link
+            const tocLinks = tocEl.querySelectorAll('.toc-link');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        const active = tocEl.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+                        if (active) active.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-15% 0px -70% 0px' });
+
+            headings.forEach(h => observer.observe(h));
+        }
+
+        // ─── Lightbox ─────────────────────────────────────────────────
+        function initLightbox() {
+            const overlay = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            window.openLightbox = function(src, alt) {
+                img.src = src;
+                img.alt = alt || '';
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            };
+
+            function closeLightbox() {
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+        }
+
+        // ─── Hero section ─────────────────────────────────────────────
+        function renderHero(item) {
+            const typeLabel = TYPE_LABELS[item.type] || item.type;
+            const dateStr = formatDate(item.date);
+
+            let metaExtra = '';
+            if (item.type === 'project' && item.impactMetric) {
+                metaExtra = `<span class="text-sm text-emerald-600 font-medium"><i class="fas fa-chart-line mr-1"></i>${item.impactMetric}</span>`;
+            } else if (item.type === 'research' && item.venue) {
+                metaExtra = `<span class="text-sm text-purple-600 font-medium"><i class="fas fa-map-marker-alt mr-1"></i>${item.venue}</span>`;
+            } else if (item.type === 'talk' && item.event) {
+                metaExtra = `<span class="text-sm text-emerald-600 font-medium"><i class="fas fa-calendar-alt mr-1"></i>${item.event}${item.location ? ' · ' + item.location : ''}</span>`;
+            }
+
+            let statusBadge = '';
+            if (item.type === 'project' && item.projectStatus) {
+                statusBadge = `<span class="status-badge status-${item.projectStatus.replace('-', '-')}">
+                    <i class="fas fa-circle mr-1" style="font-size:0.5rem;vertical-align:middle"></i>
+                    ${item.projectStatus.replace('-', ' ')}
+                </span>`;
+            }
+
+            // External link cluster
+            const links = [];
+            if (item.repoUrl) links.push(`<a href="${item.repoUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fab fa-github"></i> Repository</a>`);
+            if (item.demoUrl) links.push(`<a href="${item.demoUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>`);
+            if (item.pdfUrl)  links.push(`<a href="${item.pdfUrl}"  target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-file-pdf"></i> PDF</a>`);
+            if (item.paperUrl) links.push(`<a href="${item.paperUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-newspaper"></i> Paper</a>`);
+            if (item.doi)     links.push(`<a href="https://doi.org/${item.doi}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-link"></i> DOI</a>`);
+            if (item.slidesUrl) links.push(`<a href="${item.slidesUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-presentation-screen"></i> Slides</a>`);
+            if (item.videoUrl && item.type !== 'talk') links.push(`<a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fab fa-youtube"></i> Video</a>`);
+
+            // Tags
+            const tagPills = (item.tags || []).map(t =>
+                `<a href="projects.html?tag=${encodeURIComponent(t)}" class="tag-pill">${t}</a>`
+            ).join('');
+
+            // Coauthors (research)
+            let coauthorHTML = '';
+            if (item.coauthors && item.coauthors.length > 0) {
+                coauthorHTML = `<p class="text-sm text-gray-500 mt-1"><i class="fas fa-users mr-1"></i>${item.coauthors.join(', ')}</p>`;
+            }
+
+            return `
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-8">
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="type-badge type-badge-${item.type}">${typeLabel}</span>
+                    ${statusBadge}
+                    <span class="text-sm text-gray-400">${dateStr}</span>
+                    ${metaExtra}
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3" style="line-height:1.3">${item.title}</h1>
+                ${coauthorHTML}
+                ${links.length > 0 ? `<div class="flex flex-wrap gap-2 mt-5 mb-5">${links.join('')}</div>` : ''}
+                ${tagPills ? `<div class="flex flex-wrap gap-2 mt-4">${tagPills}</div>` : ''}
+            </div>`;
+        }
+
+        // ─── Project body ─────────────────────────────────────────────
+        function renderProjectBody(item) {
+            let html = `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                <div id="prose-body" class="prose-content">${renderMarkdown(item.body)}</div>
+            </div>`;
+
+            // Gallery
+            if (item.gallery && item.gallery.length > 0) {
+                const thumbs = item.gallery.map(g => `
+                    <div class="gallery-thumb" onclick="openLightbox('${g.url}','${g.alt || ''}')">
+                        <img src="${g.url}" alt="${g.alt || ''}" class="w-full h-40 object-cover">
+                    </div>`).join('');
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fas fa-images mr-2 text-blue-500"></i>Gallery</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">${thumbs}</div>
+                </div>`;
+            }
+
+            // Tech stack
+            if (item.techStack && item.techStack.length > 0) {
+                const chips = item.techStack.map(t => `<span class="tech-chip"><i class="fas fa-layer-group mr-1 text-xs"></i>${t}</span>`).join('');
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fas fa-tools mr-2 text-blue-500"></i>Tech Stack</h2>
+                    <div class="flex flex-wrap gap-2">${chips}</div>
+                </div>`;
+            }
+
+            return html;
+        }
+
+        // ─── Research body ────────────────────────────────────────────
+        function renderResearchBody(item) {
+            let html = '';
+
+            if (item.abstract) {
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fas fa-align-left mr-2 text-purple-500"></i>Abstract</h2>
+                    <div class="abstract-block">${item.abstract}</div>
+                </div>`;
+            }
+
+            html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                <div id="prose-body" class="prose-content">${renderMarkdown(item.body)}</div>
+            </div>`;
+
+            if (item.citations) {
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold text-gray-800"><i class="fas fa-quote-right mr-2 text-purple-500"></i>Cite This Work</h2>
+                        <button id="bibtex-copy-btn" class="copy-btn" style="position:static;font-size:0.8rem;padding:.3rem .75rem;background:#f1f5f9;color:#374151;border-color:#e5e7eb">
+                            <i class="fas fa-copy"></i> Copy BibTeX
+                        </button>
+                    </div>
+                    <div class="bibtex-block" id="bibtex-pre">${item.citations}</div>
+                </div>`;
+            }
+
+            return html;
+        }
+
+        // ─── Blog body ────────────────────────────────────────────────
+        function renderBlogBody(item) {
+            const readingTime = calculateReadingTime(item.body);
+
+            return `
+            <div class="flex gap-8 items-start">
+                <!-- Main column -->
+                <div class="flex-1 min-w-0">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                        <div class="mb-5">
+                            <span class="reading-time-badge">
+                                <i class="fas fa-clock"></i> ${readingTime} min read
+                            </span>
+                        </div>
+                        <div id="prose-body" class="prose-content">${renderMarkdown(item.body)}</div>
+                    </div>
+                </div>
+                <!-- ToC sidebar (desktop only) -->
+                <div class="hidden lg:block w-56 flex-shrink-0">
+                    <div id="toc-sidebar" class="toc-sidebar bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">On This Page</p>
+                        <nav id="toc-list"></nav>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // ─── Series navigator ─────────────────────────────────────────
+        function renderSeriesNav(slug) {
+            const seriesItems = getSeriesItems(slug);
+            if (seriesItems.length === 0) return '';
+
+            const item = getContentBySlug(slug);
+            const listHTML = seriesItems.map((s, i) => `
+                <a href="project-detail.html?slug=${s.slug}" class="series-item ${s.slug === slug ? 'current' : ''}">
+                    <span style="width:1.5rem;height:1.5rem;border-radius:50%;background:${s.slug === slug ? '#3b82f6' : '#e5e7eb'};color:${s.slug === slug ? 'white' : '#6b7280'};display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0">${i + 1}</span>
+                    <span style="font-size:0.875rem">${s.title}</span>
+                    ${s.slug === slug ? '<span style="margin-left:auto;font-size:0.7rem;color:#3b82f6">Current</span>' : ''}
+                </a>`).join('');
+
+            return `<div class="series-nav mb-6">
+                <p class="text-sm font-semibold text-blue-700 mb-3"><i class="fas fa-layer-group mr-2"></i>Part of: <em>${item.seriesName}</em></p>
+                <div class="space-y-1">${listHTML}</div>
+            </div>`;
+        }
+
+        // ─── Talk body ────────────────────────────────────────────────
+        function renderTalkBody(item) {
+            let html = '';
+
+            const embedUrl = getYouTubeEmbedUrl(item.videoUrl);
+            if (embedUrl) {
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fab fa-youtube mr-2 text-red-500"></i>Recording</h2>
+                    <div class="video-container">
+                        <iframe src="${embedUrl}" allowfullscreen loading="lazy"
+                            title="Talk recording" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                        </iframe>
+                    </div>
+                </div>`;
+            } else if (item.videoUrl) {
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-video mr-1"></i> Watch Recording</a>
+                </div>`;
+            }
+
+            if (item.slidesUrl) {
+                // Try to embed; provide fallback button
+                html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fas fa-chalkboard mr-2 text-blue-500"></i>Slides</h2>
+                    <a href="${item.slidesUrl}" target="_blank" rel="noopener noreferrer" class="link-btn"><i class="fas fa-external-link-alt mr-1"></i> View Slides</a>
+                </div>`;
+            }
+
+            html += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-6">
+                <div id="prose-body" class="prose-content">${renderMarkdown(item.body)}</div>
+            </div>`;
+
+            return html;
+        }
+
+        // ─── Prev / Next navigation ───────────────────────────────────
+        function renderPrevNext(slug) {
+            const { prev, next } = getPrevNext(slug);
+            if (!prev && !next) return '';
+
+            const prevHTML = prev
+                ? `<a href="project-detail.html?slug=${prev.slug}" class="nav-card">
+                    <span class="text-xs text-gray-400 flex items-center gap-1"><i class="fas fa-arrow-left"></i> Previous</span>
+                    <span class="font-medium text-gray-800 text-sm line-clamp-2" style="line-height:1.4">${prev.title}</span>
+                   </a>`
+                : `<div class="flex-1"></div>`;
+
+            const nextHTML = next
+                ? `<a href="project-detail.html?slug=${next.slug}" class="nav-card" style="text-align:right">
+                    <span class="text-xs text-gray-400 flex items-center gap-1 justify-end">Next <i class="fas fa-arrow-right"></i></span>
+                    <span class="font-medium text-gray-800 text-sm line-clamp-2" style="line-height:1.4">${next.title}</span>
+                   </a>`
+                : `<div class="flex-1"></div>`;
+
+            return `<div class="flex gap-4 mt-8 mb-6">${prevHTML}${nextHTML}</div>`;
+        }
+
+        // ─── Related content ──────────────────────────────────────────
+        function renderRelated(slug) {
+            const related = getRelatedContent(slug, 3);
+            if (related.length === 0) return '';
+
+            const cards = related.map(item => `
+                <a href="project-detail.html?slug=${item.slug}" class="related-card">
+                    <div class="related-icon related-icon-${item.type}">${TYPE_ICONS[item.type] || '📄'}</div>
+                    <div class="flex-1 min-w-0">
+                        <span class="type-badge type-badge-${item.type} mb-1" style="display:inline-flex">${TYPE_LABELS[item.type]}</span>
+                        <p class="font-medium text-gray-800 text-sm" style="line-height:1.4;margin-top:0.2rem">${item.title}</p>
+                        <p class="text-gray-400 text-xs mt-1">${formatDate(item.date)}</p>
+                    </div>
+                </a>`).join('');
+
+            return `<div class="mb-8">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Related</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">${cards}</div>
+            </div>`;
+        }
+
+        // ─── Main page render ─────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            initLightbox();
+
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) { showErrorState(null); return; }
+
+            const item = getContentBySlug(slug);
+            if (!item) { showErrorState(slug); return; }
+
+            updateSEO(item);
+
+            const backHref = buildBackHref();
+            const root = document.getElementById('page-root');
+
+            // Build page HTML
+            let bodyHTML = '';
+            if (item.type === 'project')  bodyHTML = renderProjectBody(item);
+            else if (item.type === 'research') bodyHTML = renderResearchBody(item);
+            else if (item.type === 'blog')     bodyHTML = renderBlogBody(item);
+            else if (item.type === 'talk')     bodyHTML = renderTalkBody(item);
+
+            root.innerHTML = `
+                <!-- Back link -->
+                <div class="mb-6">
+                    <a href="${backHref}" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition">
+                        <i class="fas fa-arrow-left"></i> All Projects
+                    </a>
+                </div>
+
+                <!-- Hero -->
+                ${renderHero(item)}
+
+                <!-- Body -->
+                ${bodyHTML}
+
+                <!-- Series navigator (blog only, post-render) -->
+                ${item.type === 'blog' ? '<div id="series-nav-placeholder"></div>' : ''}
+
+                <!-- Prev / Next -->
+                ${renderPrevNext(item.slug)}
+
+                <!-- Related -->
+                ${renderRelated(item.slug)}
+            `;
+
+            // Post-render: syntax highlighting + ToC + series nav
+            if (item.type === 'blog') {
+                const proseEl = document.getElementById('prose-body');
+                highlightCode(proseEl);
+
+                const tocEl = document.getElementById('toc-list');
+                if (tocEl) buildToC(proseEl, tocEl);
+
+                const seriesPlaceholder = document.getElementById('series-nav-placeholder');
+                if (seriesPlaceholder) {
+                    seriesPlaceholder.outerHTML = renderSeriesNav(item.slug);
+                }
+            } else if (item.type === 'project' || item.type === 'research' || item.type === 'talk') {
+                const proseEl = document.getElementById('prose-body');
+                if (proseEl) highlightCode(proseEl);
+            }
+
+            // BibTeX copy button (research)
+            if (item.type === 'research') {
+                addBibTeXCopyBtn(root);
+            }
+
+            // ── Mobile menu toggle ─────────────────────────────────────
+            document.getElementById('menu-btn').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+
+            // ── Navbar shadow on scroll ────────────────────────────────
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                nav.classList.toggle('shadow-md', window.scrollY > 10);
+            });
+        });
+    </script>
+</body>
+</html>

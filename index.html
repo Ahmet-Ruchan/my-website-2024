@@ -59,6 +59,82 @@
             background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
         }
         
+        /* Experience Timeline Styles */
+        .experience-timeline {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.375rem;
+            top: 1.5rem;
+            bottom: 1.5rem;
+            width: 2px;
+            background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+        .experience-card {
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .experience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.12);
+        }
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            left: -2.125rem;
+            top: 2rem;
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #3b82f6;
+            z-index: 2;
+        }
+        .experience-bullet {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .experience-bullet::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .date-badge {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .location-badge {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+        .tech-highlight {
+            color: #6d28d9;
+            font-weight: 700;
+        }
+        @media (max-width: 640px) {
+            .experience-timeline {
+                padding-left: 0;
+            }
+            .experience-timeline::before,
+            .experience-card::before {
+                display: none;
+            }
+        }
+        
         /* Success Notification Styles */
         .notification-overlay {
             position: fixed;
@@ -205,7 +281,8 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 transition">About</a>
                     <a href="#experience" class="nav-link text-gray-700 hover:text-blue-600 transition">Experience</a>
-                    <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-blue-600 transition">Portfolio</a>
+                    <a href="projects.html" class="nav-link text-gray-700 hover:text-blue-600 transition">Projects</a>
                     <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 transition">Contact</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -220,7 +297,8 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">About</a>
                 <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Experience</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Projects</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Portfolio</a>
+                <a href="projects.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Projects</a>
                 <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100">Contact</a>
             </div>
         </div>
@@ -318,9 +396,81 @@
     <!-- Experience Section -->
     <section id="experience" class="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
-            <div class="flex items-center justify-center mb-12">
+            <div class="flex items-center justify-center mb-16">
                 <i class="fas fa-arrow-down text-blue-500 mr-3 text-xl"></i>
                 <h2 class="text-3xl font-bold text-center section-title">Explore My Experience</h2>
+            </div>
+            
+            <!-- Professional Experience Timeline -->
+            <div class="mb-20">
+                <h3 class="text-2xl font-semibold mb-10 text-center gradient-text">Professional Experience</h3>
+                <div class="experience-timeline space-y-12">
+                    <!-- Hisar Hospital Intercontinental -->
+                    <div class="experience-card bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="p-6 md:p-8">
+                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                                <div>
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
+                                            <i class="fas fa-hospital text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold text-gray-900">Hisar Hospital Intercontinental</h4>
+                                            <p class="text-gray-600 font-medium">Jr. Artificial Intelligence Engineer</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">Full-Time</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="date-badge">07/2025 – Present</span>
+                                    <span class="location-badge"><i class="fas fa-map-marker-alt mr-1"></i>Üsküdar, İstanbul, Turkey</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="experience-bullet">Owned the design and delivery of production AI features across <span class="tech-highlight">ML</span>/<span class="tech-highlight">DL</span>/<span class="tech-highlight">NLP</span> + <span class="tech-highlight">GenAI</span>/<span class="tech-highlight">LLM</span>, from prototyping and evaluation to API release and enterprise integration.</li>
+                                <li class="experience-bullet">Shipped <span class="tech-highlight">Python</span> services with <span class="tech-highlight">FastAPI</span> exposing clinical automation capabilities; delivered an <span class="tech-highlight">OCR</span> pipeline processing ≥300 documents/day and a <span class="tech-highlight">Speech-to-Text</span> workflow used by ≥5 doctors/day (≥3 minutes each), integrated into <span class="tech-highlight">ERP</span>/<span class="tech-highlight">HBYS</span> operational flows.</li>
+                                <li class="experience-bullet">Designed and implemented an end-to-end <span class="tech-highlight">RAG</span> system (ingestion → chunking → embeddings → retrieval → grounded generation) using <span class="tech-highlight">LangChain</span>/<span class="tech-highlight">LangGraph</span>, <span class="tech-highlight">Vector DB</span>, and <span class="tech-highlight">LLM APIs</span> over a curated knowledge base of 150 documents.</li>
+                                <li class="experience-bullet">Implemented evaluation-minded iteration for retrieval quality via manual spot-checks, error analysis, and prompt/retrieval tuning (e.g., chunking strategy, top-k retrieval), improving grounding and reducing hallucinations in production responses.</li>
+                                <li class="experience-bullet">Owned backend data and performance components: implemented persistence and query patterns using <span class="tech-highlight">PostgreSQL</span> / <span class="tech-highlight">Microsoft SQL Server</span> / <span class="tech-highlight">MongoDB</span>, and added <span class="tech-highlight">Redis</span> caching for low-latency access.</li>
+                                <li class="experience-bullet">Implemented containerized deployment and release workflow: packaged services with <span class="tech-highlight">Docker</span>, deployed on <span class="tech-highlight">Kubernetes</span>, and managed <span class="tech-highlight">CI/CD</span> + lifecycle with <span class="tech-highlight">GitLab</span>, enabling repeatable releases and stable production operation.</li>
+                                <li class="experience-bullet">Enabled flexible LLM serving paths based on constraints (cloud APIs vs. local inference), working with <span class="tech-highlight">vLLM</span>, <span class="tech-highlight">llama.cpp</span>, and <span class="tech-highlight">MLX</span> where applicable to balance performance, cost, and compliance.</li>
+                                <li class="experience-bullet">Focused on reliable production operations (monitoring, debugging, incident handling) and <span class="tech-highlight">MLOps</span>-ready patterns (versioning, reproducibility), ensuring AI features remain maintainable as usage scales.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- TÜBİTAK BİLGEM -->
+                    <div class="experience-card bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="p-6 md:p-8">
+                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                                <div>
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white">
+                                            <i class="fas fa-flask text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold text-gray-900">TÜBİTAK BİLGEM</h4>
+                                            <p class="text-gray-600 font-medium">Intern Machine Learning Engineer</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1"><span class="tech-highlight">B3LAB</span> — <span class="tech-highlight">Cloud Computing</span> & <span class="tech-highlight">Big Data</span> Research Laboratory</p>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="date-badge">06/2023 – 09/2023</span>
+                                    <span class="location-badge"><i class="fas fa-map-marker-alt mr-1"></i>Gebze, Kocaeli, Turkey</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="experience-bullet">Worked as a <span class="tech-highlight">Machine Learning Engineer</span> at <span class="tech-highlight">B3LAB</span> (<span class="tech-highlight">Cloud Computing</span> & <span class="tech-highlight">Big Data</span> Research Laboratory), owning end-to-end workflows from data preparation and feature engineering to model training, evaluation, and iterative improvement for production-oriented <span class="tech-highlight">ML</span> use cases.</li>
+                                <li class="experience-bullet">Contributed to the EU-funded <span class="tech-highlight">STORAIGE</span> initiative by designing and optimizing <span class="tech-highlight">ML</span>/<span class="tech-highlight">DL</span> models to strengthen automation and decision-support, following a rigorous experimentation loop (baseline → improvement → evaluation).</li>
+                                <li class="experience-bullet">Built repeatable data pipelines and transformed 10,000+ raw datasets into clean, structured, model-ready assets; performed <span class="tech-highlight">EDA</span> and visualization to guide feature selection, model choice, and hypothesis-driven improvements.</li>
+                                <li class="experience-bullet">Developed and tuned real-time anomaly detection solutions using both supervised and unsupervised approaches; applied <span class="tech-highlight">cross-validation</span>, <span class="tech-highlight">hyperparameter tuning</span>, and error analysis to improve generalization.</li>
+                                <li class="experience-bullet">Delivered measurable results: achieved a 15% reduction in error rates and a 25% increase in operational efficiency through improved detection accuracy and faster actionable signaling in real-time workflows.</li>
+                                <li class="experience-bullet">Documented experiments and results clearly, enabling reproducibility and smooth handoff across research/engineering stakeholders.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="mb-16">
@@ -376,15 +526,6 @@
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-check text-green-500"></i>
                             </div>
-                            <h4 class="font-medium">ONNX</h4>
-                        </div>
-                        <p class="text-gray-500">Intermediate</p>
-                    </div>
-                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
-                        <div class="flex items-center mb-3">
-                            <div class="bg-green-100 p-2 rounded-full mr-3">
-                                <i class="fas fa-check text-green-500"></i>
-                            </div>
                             <h4 class="font-medium">OpenCV</h4>
                         </div>
                         <p class="text-gray-500">Intermediate</p>
@@ -398,21 +539,66 @@
                         </div>
                         <p class="text-gray-500">Intermediate</p>
                     </div>
-                </div>
-            </div>
-            
-            <div>
-                <h3 class="text-2xl font-semibold mb-6 text-center gradient-text">Computer Science</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
                         <div class="flex items-center mb-3">
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-check text-green-500"></i>
                             </div>
-                            <h4 class="font-medium">Data Science</h4>
+                            <h4 class="font-medium">LangChain / LangGraph</h4>
                         </div>
                         <p class="text-gray-500">Experienced</p>
                     </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">RAG</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">GenAI / LLM</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Computer Vision</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Machine Learning</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Deep Learning</h4>
+                        </div>
+                        <p class="text-gray-500">Intermediate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-center gradient-text">Computer Science & Tools</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
                         <div class="flex items-center mb-3">
                             <div class="bg-green-100 p-2 rounded-full mr-3">
@@ -427,9 +613,27 @@
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-check text-green-500"></i>
                             </div>
-                            <h4 class="font-medium">HTML & CSS</h4>
+                            <h4 class="font-medium">FastAPI</h4>
                         </div>
-                        <p class="text-gray-500">Intermediate</p>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Docker</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Kubernetes</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
                     </div>
                     <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
                         <div class="flex items-center mb-3">
@@ -438,6 +642,15 @@
                             </div>
                             <h4 class="font-medium">Git</h4>
                         </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">GitLab CI/CD</h4>
+                        </div>
                         <p class="text-gray-500">Intermediate</p>
                     </div>
                     <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
@@ -445,18 +658,36 @@
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-check text-green-500"></i>
                             </div>
-                            <h4 class="font-medium">JavaScript</h4>
+                            <h4 class="font-medium">PostgreSQL</h4>
                         </div>
-                        <p class="text-gray-500">Basic</p>
+                        <p class="text-gray-500">Experienced</p>
                     </div>
                     <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
                         <div class="flex items-center mb-3">
                             <div class="bg-green-100 p-2 rounded-full mr-3">
                                 <i class="fas fa-check text-green-500"></i>
                             </div>
-                            <h4 class="font-medium">Swift</h4>
+                            <h4 class="font-medium">MongoDB</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Redis</h4>
                         </div>
                         <p class="text-gray-500">Intermediate</p>
+                    </div>
+                    <div class="skill-card bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-green-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-check text-green-500"></i>
+                            </div>
+                            <h4 class="font-medium">Linux</h4>
+                        </div>
+                        <p class="text-gray-500">Experienced</p>
                     </div>
                 </div>
             </div>
@@ -573,7 +804,8 @@
                 <div class="flex space-x-6 mb-4 md:mb-0">
                     <a href="#about" class="hover:text-blue-300 transition">About</a>
                     <a href="#experience" class="hover:text-blue-300 transition">Experience</a>
-                    <a href="#projects" class="hover:text-blue-300 transition">Projects</a>
+                    <a href="#projects" class="hover:text-blue-300 transition">Portfolio</a>
+                    <a href="projects.html" class="hover:text-blue-300 transition">Projects</a>
                     <a href="#contact" class="hover:text-blue-300 transition">Contact</a>
                 </div>
                 <div class="flex space-x-4">
