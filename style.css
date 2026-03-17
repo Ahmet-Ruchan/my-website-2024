@@ -194,13 +194,22 @@ h2 {
 
 .main-content {
   margin-left: var(--sidebar-w);
-  max-width: 860px;
+  max-width: calc(100% - var(--sidebar-w));
   padding: 4rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 section {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  width: min(100%, 900px);
+  text-align: left;
+}
+
+#home {
+  text-align: center;
 }
 
 section:first-child {
@@ -208,8 +217,8 @@ section:first-child {
 }
 
 .profile-photo {
-  width: 180px;
-  height: 180px;
+  width: 320px;
+  height: 320px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center 15%;
@@ -236,14 +245,15 @@ section:first-child {
 
 .social-icons {
   display: flex;
-  gap: 1.25rem;
+  justify-content: center;
+  gap: 1.6rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
 .social-icons a {
   color: var(--text-muted);
-  font-size: 1.6rem;
+  font-size: 2.1rem;
   transition: color 0.15s;
 }
 
@@ -256,6 +266,7 @@ section:first-child {
   font-size: 0.9rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
@@ -284,6 +295,13 @@ section:first-child {
   color: var(--link);
 }
 
+.home-quote {
+  margin-top: 0.9rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 .vtimeline {
   position: relative;
   padding-left: 28px;
@@ -303,6 +321,7 @@ section:first-child {
 .vtimeline-item {
   position: relative;
   margin-bottom: 3rem;
+  text-align: left;
 }
 
 .vtimeline-item:last-child {
@@ -325,7 +344,7 @@ section:first-child {
   font-family: 'DM Mono', monospace;
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 0.25rem;
+  margin: 0 0 0.25rem;
 }
 
 .vtimeline-title {
@@ -414,6 +433,7 @@ section:first-child {
   line-height: 1.6;
   color: var(--text);
   margin-bottom: 0.6rem;
+  text-align: left;
 }
 
 .project-card-link {
@@ -437,6 +457,7 @@ section:first-child {
 .blog-list li {
   margin-bottom: 0.85rem;
   line-height: 1.6;
+  text-align: left;
 }
 
 .blog-date {
@@ -456,9 +477,49 @@ section:first-child {
   color: var(--text-muted);
 }
 
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.gallery-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--sidebar-bg);
+  overflow: hidden;
+}
+
+.gallery-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-card-body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.gallery-card-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+
+.gallery-card-caption {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-align: left;
+}
+
 .contact-links {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.6rem;
   margin-bottom: 1.5rem;
 }
@@ -481,6 +542,14 @@ section:first-child {
 
   .main-content {
     padding: 3rem 3rem;
+  }
+
+  .social-icons a {
+    font-size: 1.95rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -510,9 +579,14 @@ section:first-child {
     grid-template-columns: 1fr;
   }
 
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
   .contact-info-row {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 0.25rem;
   }
 
@@ -521,8 +595,12 @@ section:first-child {
   }
 
   .profile-photo {
-    width: 140px;
-    height: 140px;
+    width: 240px;
+    height: 240px;
+  }
+
+  .social-icons a {
+    font-size: 1.8rem;
   }
 
   h1 {
@@ -544,11 +622,11 @@ section:first-child {
   }
 
   .profile-photo {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
   }
 
   .social-icons a {
-    font-size: 1.4rem;
+    font-size: 1.65rem;
   }
 }
