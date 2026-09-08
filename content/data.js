@@ -8,6 +8,36 @@
 
 const CONTENT = [
     {
+        slug: 'trace-research-paper-studio',
+        type: 'project',
+        status: 'published',
+        featured: true,
+        title: 'Trace Research Paper Studio',
+        description: 'Turns research papers into source-linked, interactive learning experiences with page-level evidence, visual explanations, equation playgrounds, and portable web stories.',
+        date: '2026-09-08',
+        tags: ['Artificial Intelligence', 'Research Tools', 'Interactive Learning', 'Open Source'],
+        coverImage: null,
+        projectStatus: 'active',
+        techStack: ['Next.js', 'React', 'TypeScript', 'Zod', 'Preact'],
+        impactMetric: null,
+        repoUrl: 'https://github.com/Ahmet-Ruchan/trace-research-paper-studio',
+        demoUrl: null,
+        paperUrl: null,
+        gallery: [],
+        body: `## Overview
+
+Trace turns research-paper PDFs into interactive workspaces where explanations connect to source pages and quotations. Readers can explore visual narratives, experiment with equations, and check their understanding with evidence-linked quizzes.
+
+## Research workflow
+
+The studio brings together evidence inspection, narrative editing, and a reading preview. Projects can be kept in a local library, compared side by side, and exported as portable .trace.json files or self-contained websites.
+
+## Explore the project
+
+See the [GitHub repository](https://github.com/Ahmet-Ruchan/trace-research-paper-studio) for the source code, setup instructions, and the included Attention Is All You Need example.`
+    },
+
+    {
         slug: 'detecthub',
         type: 'project',
         status: 'published',
