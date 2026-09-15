@@ -56,4 +56,65 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   overlay.addEventListener('click', closeSidebar);
+
+  // ---- How to Learn: topic filters ----
+  var filterBar = document.querySelector('.learn-filters');
+  if (filterBar) {
+    var scope = document.getElementById(filterBar.getAttribute('data-scope'));
+    var cards = scope.querySelectorAll('.learn-card[data-tags]');
+    var grids = scope.querySelectorAll('.learn-grid');
+    var labels = {};
+
+    var acronyms = { llm: 'LLM', ai: 'AI', nlp: 'NLP', cv: 'CV', rl: 'RL' };
+
+    function slugToLabel(slug) {
+      return slug.split('-').map(function(w) {
+        return acronyms[w] || (w.charAt(0).toUpperCase() + w.slice(1));
+      }).join(' ');
+    }
+
+    // Build one pill per tag actually used by a card, in first-seen order.
+    cards.forEach(function(card) {
+      card.getAttribute('data-tags').split(/\s+/).forEach(function(tag) {
+        if (tag && !labels[tag]) {
+          labels[tag] = slugToLabel(tag);
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'learn-pill';
+          btn.setAttribute('data-filter', tag);
+          btn.textContent = labels[tag];
+          filterBar.appendChild(btn);
+        }
+      });
+    });
+
+    function applyFilter(tag) {
+      cards.forEach(function(card) {
+        var tags = card.getAttribute('data-tags').split(/\s+/);
+        var show = tag === 'all' || tags.indexOf(tag) !== -1;
+        card.classList.toggle('is-hidden', !show);
+      });
+      grids.forEach(function(grid) {
+        var visible = grid.querySelectorAll('.learn-card:not(.is-hidden)').length;
+        var empty = grid.querySelector('.learn-empty');
+        if (!visible && !empty) {
+          empty = document.createElement('p');
+          empty.className = 'learn-empty';
+          empty.textContent = 'Nothing here for this topic yet.';
+          grid.appendChild(empty);
+        } else if (visible && empty) {
+          empty.remove();
+        }
+      });
+    }
+
+    filterBar.addEventListener('click', function(e) {
+      var pill = e.target.closest('.learn-pill');
+      if (!pill) return;
+      filterBar.querySelectorAll('.learn-pill').forEach(function(p) {
+        p.classList.toggle('active', p === pill);
+      });
+      applyFilter(pill.getAttribute('data-filter'));
+    });
+  }
 });
