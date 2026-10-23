@@ -632,7 +632,8 @@ section:first-child {
   border-color: var(--text-muted);
 }
 
-.learn-card.is-hidden {
+.learn-card.is-hidden,
+.learn-card.is-collapsed {
   display: none;
 }
 
@@ -716,6 +717,40 @@ section:first-child {
 
 .learn-card-link:hover {
   text-decoration: underline;
+}
+
+.learn-more {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.1rem auto 0;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.learn-more[hidden] {
+  display: none;
+}
+
+.learn-more:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.learn-more:focus-visible {
+  outline: 2px solid var(--active);
+  outline-offset: 3px;
+}
+
+.learn-more i {
+  font-size: 0.65rem;
 }
 
 .learn-empty {

@@ -57,6 +57,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
   overlay.addEventListener('click', closeSidebar);
 
+  // Reveal long reading and learning lists in small batches.
+  var pageSize = 8;
+  var contentLists = [];
+  document.querySelectorAll('.learn-grid').forEach(function(grid, index) {
+    var items = Array.from(grid.querySelectorAll('.learn-card'));
+    var limit = pageSize;
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'learn-more';
+    button.hidden = true;
+    if (!grid.id) grid.id = 'learn-list-' + index;
+    button.setAttribute('aria-controls', grid.id);
+    button.innerHTML = 'Show more <i class="fas fa-chevron-down" aria-hidden="true"></i>';
+    grid.insertAdjacentElement('afterend', button);
+
+    function render() {
+      var matching = items.filter(function(card) {
+        return !card.classList.contains('is-hidden');
+      });
+      items.forEach(function(card) {
+        card.classList.remove('is-collapsed');
+      });
+      matching.forEach(function(card, i) {
+        card.classList.toggle('is-collapsed', i >= limit);
+      });
+      button.hidden = matching.length <= limit;
+    }
+
+    button.addEventListener('click', function() {
+      var matching = items.filter(function(card) {
+        return !card.classList.contains('is-hidden');
+      });
+      var firstNew = matching[limit];
+      limit += pageSize;
+      render();
+      if (firstNew) {
+        firstNew.setAttribute('tabindex', '-1');
+        firstNew.focus({ preventScroll: true });
+      }
+    });
+    contentLists.push({
+      reset: function() {
+        limit = pageSize;
+        render();
+      }
+    });
+    render();
+  });
+
   // ---- How to Learn: topic filters ----
   var filterBar = document.querySelector('.learn-filters');
   if (filterBar) {
@@ -115,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         p.classList.toggle('active', p === pill);
       });
       applyFilter(pill.getAttribute('data-filter'));
+      contentLists.forEach(function(list) { list.reset(); });
     });
   }
 });
