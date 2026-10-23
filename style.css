@@ -719,6 +719,44 @@ section:first-child {
   text-decoration: underline;
 }
 
+.resource-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.learn-resource.is-hidden,
+.learn-resource.is-collapsed {
+  display: none;
+}
+
+.resource-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  color: var(--link);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.resource-link i {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.resource-link:hover span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.resource-link:focus-visible {
+  outline: 2px solid var(--active);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 .learn-more {
   display: flex;
   align-items: center;

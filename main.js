@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Reveal long reading and learning lists in small batches.
   var pageSize = 8;
   var contentLists = [];
-  document.querySelectorAll('.learn-grid').forEach(function(grid, index) {
-    var items = Array.from(grid.querySelectorAll('.learn-card'));
+  document.querySelectorAll('.learn-grid, .resource-list').forEach(function(grid, index) {
+    var items = Array.from(grid.querySelectorAll('.learn-card, .learn-resource'));
     var limit = pageSize;
     var button = document.createElement('button');
     button.type = 'button';
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var filterBar = document.querySelector('.learn-filters');
   if (filterBar) {
     var scope = document.getElementById(filterBar.getAttribute('data-scope'));
-    var cards = scope.querySelectorAll('.learn-card[data-tags]');
-    var grids = scope.querySelectorAll('.learn-grid');
+    var cards = scope.querySelectorAll('.learn-card[data-tags], .learn-resource[data-tags]');
+    var grids = scope.querySelectorAll('.learn-grid, .resource-list');
     var labels = {};
 
     var acronyms = { llm: 'LLM', ai: 'AI', nlp: 'NLP', cv: 'CV', rl: 'RL' };
@@ -144,10 +144,10 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.toggle('is-hidden', !show);
       });
       grids.forEach(function(grid) {
-        var visible = grid.querySelectorAll('.learn-card:not(.is-hidden)').length;
+        var visible = grid.querySelectorAll('.learn-card:not(.is-hidden), .learn-resource:not(.is-hidden)').length;
         var empty = grid.querySelector('.learn-empty');
         if (!visible && !empty) {
-          empty = document.createElement('p');
+          empty = document.createElement(grid.tagName === 'UL' ? 'li' : 'p');
           empty.className = 'learn-empty';
           empty.textContent = 'Nothing here for this topic yet.';
           grid.appendChild(empty);
