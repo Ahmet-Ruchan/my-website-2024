@@ -758,6 +758,7 @@ section:first-child {
 }
 
 .learn-more {
+  min-height: 44px;
   display: flex;
   align-items: center;
   gap: 0.5rem;

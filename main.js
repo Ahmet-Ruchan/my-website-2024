@@ -58,11 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
   overlay.addEventListener('click', closeSidebar);
 
   // Reveal long reading and learning lists in small batches.
-  var pageSize = 8;
+  var mobileContentQuery = window.matchMedia('(max-width: 768px)');
+  function contentPageSize() {
+    return mobileContentQuery.matches ? 2 : 4;
+  }
   var contentLists = [];
   document.querySelectorAll('.learn-grid, .resource-list').forEach(function(grid, index) {
     var items = Array.from(grid.querySelectorAll('.learn-card, .learn-resource'));
-    var limit = pageSize;
+    var batches = 1;
     var button = document.createElement('button');
     button.type = 'button';
     button.className = 'learn-more';
@@ -73,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     grid.insertAdjacentElement('afterend', button);
 
     function render() {
+      var limit = batches * contentPageSize();
       var matching = items.filter(function(card) {
         return !card.classList.contains('is-hidden');
       });
@@ -89,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
       var matching = items.filter(function(card) {
         return !card.classList.contains('is-hidden');
       });
-      var firstNew = matching[limit];
-      limit += pageSize;
+      var firstNew = matching[batches * contentPageSize()];
+      batches += 1;
       render();
       if (firstNew) {
         firstNew.setAttribute('tabindex', '-1');
@@ -98,12 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     contentLists.push({
+      render: render,
       reset: function() {
-        limit = pageSize;
+        batches = 1;
         render();
       }
     });
     render();
+  });
+
+  mobileContentQuery.addEventListener('change', function() {
+    contentLists.forEach(function(list) { list.render(); });
   });
 
   // ---- How to Learn: topic filters ----
