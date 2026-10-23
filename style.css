@@ -775,12 +775,24 @@ section:first-child {
   border-radius: 2px;
 }
 
+.learn-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.learn-controls[hidden] {
+  display: none;
+}
+
 .learn-more {
   min-height: 44px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 1.1rem auto 0;
+  margin: 0;
   padding: 0.4rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -812,6 +824,10 @@ section:first-child {
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: translateY(-2px) rotate(45deg);
+}
+
+.learn-less .learn-more-chevron {
+  transform: translateY(2px) rotate(225deg);
 }
 
 .learn-empty {

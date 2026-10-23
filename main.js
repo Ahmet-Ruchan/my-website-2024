@@ -73,7 +73,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!grid.id) grid.id = 'learn-list-' + index;
     button.setAttribute('aria-controls', grid.id);
     button.innerHTML = 'Show more <span class="learn-more-chevron" aria-hidden="true"></span>';
-    grid.insertAdjacentElement('afterend', button);
+    var lessButton = document.createElement('button');
+    lessButton.type = 'button';
+    lessButton.className = 'learn-more learn-less';
+    lessButton.hidden = true;
+    lessButton.setAttribute('aria-controls', grid.id);
+    lessButton.innerHTML = 'Show less <span class="learn-more-chevron" aria-hidden="true"></span>';
+    var controls = document.createElement('div');
+    controls.className = 'learn-controls';
+    controls.appendChild(button);
+    controls.appendChild(lessButton);
+    grid.insertAdjacentElement('afterend', controls);
 
     function render() {
       var limit = batches * contentPageSize();
@@ -87,6 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.toggle('is-collapsed', i >= limit);
       });
       button.hidden = matching.length <= limit;
+      lessButton.hidden = batches === 1 || matching.length <= contentPageSize();
+      controls.hidden = button.hidden && lessButton.hidden;
+      button.setAttribute('aria-expanded', String(!lessButton.hidden));
+      lessButton.setAttribute('aria-expanded', String(!lessButton.hidden));
     }
 
     button.addEventListener('click', function() {
@@ -100,6 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
         firstNew.setAttribute('tabindex', '-1');
         firstNew.focus({ preventScroll: true });
       }
+    });
+    lessButton.addEventListener('click', function() {
+      batches = 1;
+      render();
+      button.focus();
     });
     contentLists.push({
       render: render,
