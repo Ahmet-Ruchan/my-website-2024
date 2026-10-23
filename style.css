@@ -804,6 +804,16 @@ section:first-child {
   transition: color 0.2s, border-color 0.2s;
 }
 
+.learn-more:not(.learn-less) {
+  background: var(--sidebar-bg);
+  box-shadow: 0 3px 10px rgba(26, 26, 24, 0.12), 0 1px 3px rgba(26, 26, 24, 0.06);
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.learn-more:not(.learn-less):hover {
+  box-shadow: 0 4px 14px rgba(26, 26, 24, 0.17), 0 2px 4px rgba(26, 26, 24, 0.08);
+}
+
 .learn-more[hidden] {
   display: none;
 }
