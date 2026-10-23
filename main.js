@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     button.hidden = true;
     if (!grid.id) grid.id = 'learn-list-' + index;
     button.setAttribute('aria-controls', grid.id);
-    button.innerHTML = 'Show more <i class="fas fa-chevron-down" aria-hidden="true"></i>';
+    button.innerHTML = 'Show more <span class="learn-more-chevron" aria-hidden="true"></span>';
     grid.insertAdjacentElement('afterend', button);
 
     function render() {

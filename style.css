@@ -788,8 +788,12 @@ section:first-child {
   outline-offset: 3px;
 }
 
-.learn-more i {
-  font-size: 0.65rem;
+.learn-more-chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
 }
 
 .learn-empty {
