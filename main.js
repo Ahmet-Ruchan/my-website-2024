@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var contentLists = [];
   document.querySelectorAll('.learn-grid, .resource-list').forEach(function(grid, index) {
     var items = Array.from(grid.querySelectorAll('.learn-card, .learn-resource'));
+    function listPageSize() {
+      return grid.classList.contains('resource-list') ? 5 : contentPageSize();
+    }
     var batches = 1;
     var button = document.createElement('button');
     button.type = 'button';
@@ -86,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     grid.insertAdjacentElement('afterend', controls);
 
     function render() {
-      var limit = batches * contentPageSize();
+      var limit = batches * listPageSize();
       var matching = items.filter(function(card) {
         return !card.classList.contains('is-hidden');
       });
@@ -97,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.toggle('is-collapsed', i >= limit);
       });
       button.hidden = matching.length <= limit;
-      lessButton.hidden = batches === 1 || matching.length <= contentPageSize();
+      lessButton.hidden = batches === 1 || matching.length <= listPageSize();
       controls.hidden = button.hidden && lessButton.hidden;
       button.setAttribute('aria-expanded', String(!lessButton.hidden));
       lessButton.setAttribute('aria-expanded', String(!lessButton.hidden));
@@ -107,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var matching = items.filter(function(card) {
         return !card.classList.contains('is-hidden');
       });
-      var firstNew = matching[batches * contentPageSize()];
+      var firstNew = matching[batches * listPageSize()];
       batches += 1;
       render();
       if (firstNew) {
